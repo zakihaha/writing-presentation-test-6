@@ -1,128 +1,139 @@
-# Writing & Presentation Test Week 5
+# Writing & Presentation Test Week 6
 ##### Muh Zaki Choiruddin 
 ##### Backend Web Development Track | Skilvul Tech4Impact
 
 Assalamu'alaikum Wr. Wb. Di markdown ini saya akan menjelaskan berbagai materi yang telah saya pelajari selama mengikuti kegiatan `Kampus Merdeka Skilvul Tech4Impact pada track Backend Web Development`.
 
-  - [Web Server & RESTful API](#web-server--restful-api)
-    - [Pengertian](#pengertian)
-    - [REST](#rest)
-  - [Intro & Essential Node JS](#intro--essential-node-js)
-    - [Node JS](#node-js)
-    - [Arsitektur](#arsitektur)
-    - [Hal yang perlu dipahami sebelum belajar Node JS](#hal-yang-perlu-dipahami-sebelum-belajar-node-js)
-  - [Express JS](#express-js)
-    - [Pengertian](#pengertian-1)
-    - [Kelebihan](#kelebihan)
-    - [Back End Web Application](#back-end-web-application)
-  - [Design Database With MySQL](#design-database-with-mysql)
-    - [Pengertian](#pengertian-2)
-    - [Kelebihan](#kelebihan-1)
-    - [Kekurangan](#kekurangan)
-    - [Langkah-langkah Mendesain Database](#langkah-langkah-mendesain-database)
+- [Database MySQL Lanjutan]
+- [Authentication & Authorization]
+- [Sequelize]
 
-## Web Server & RESTful API
+## Database MySQL Lanjutan
 ### Pengertian
-Web server adalah komputer yang menyimpan, memproses, dan mengirim file website ke web browser. Web server terdiri dari hardware dan software yang menggunakan HTTP (Hypertext Transfer Protocol) untuk merespons permintaan pengguna web dari World Wide Web. Melalui proses ini, web server memuat dan mengirim halaman yang diminta untuk disajikan di browser pengguna, misalnya Google Chrome.
+Database adalah kumpulan informasi yang disimpan didalam komputer secara sistematik dan saling berelasi. Database merupakan sekumpulan tabel yang berisikan informasi untuk diolah yang kemudian data tersebut bisa digunakan di dalam sebuah sistem. 
 
-#### Hardware
-Di sisi perangkat keras, server web adalah komputer yang menyimpan perangkat lunak server web dan file komponen situs web. (misalnya, dokumen HTML, gambar, CSS stylesheet, dan file JavaScript) Server web terhubung ke Internet dan mendukung pertukaran data fisik dengan perangkat lain yang terhubung ke web.
+### Relasi di MySQL
+#### One to Many
+Paling Sering Digunakan dan Satu baris dalam tabel dapat memiliki beberapa baris di table relasinya
 
-#### Software
-Di sisi perangkat lunak, server web mencakup beberapa bagian yang mengontrol bagaimana pengguna web mengakses file yang dihosting. Minimal, ini adalah server HTTP. Server HTTP adalah perangkat lunak yang memahami URL (alamat web) dan HTTP (protokol yang digunakan browser Anda untuk melihat halaman web). Server HTTP dapat diakses melalui nama domain situs web yang disimpannya, dan mengirimkan konten situs web yang dihosting ini ke perangkat pengguna akhir.
+#### Many to Many
+Digunakan ketika kedua tabel yang berelasi dapat memiliki beberapa baris di tabel relasinya.
 
-#### Static Web Server
-Server web statis, atau tumpukan, terdiri dari komputer (perangkat keras) dengan server HTTP (perangkat lunak). Kami menyebutnya "statis" karena server mengirimkan file yang dihosting apa adanya ke browser Anda.
+#### One to One
+Diimplementasikan dengan cara yang sama seperti One to Many tetapi dengan kondisi tambahan (foreign key merupakan primary key)
 
-#### Dynamic Web Server
-Sebuah server web dinamis terdiri dari server web statis ditambah perangkat lunak tambahan, paling sering server aplikasi dan database. Kami menyebutnya "dinamis" karena server aplikasi memperbarui file yang dihosting sebelum mengirim konten ke browser Anda melalui server HTTP.
+### Database Normalization
+Database Normalization merupakan teknik analisis data yang mengorganisasikan atribut-atribut data dengan cara mengelompokkan sehingga terbentuk entitas yang non-redundant, stabil, dan fleksible. Tujuannya adalah:
+- Menghilangkan redundan data pada database.
+- Memudahkan juka ada perubahan struktur table database.
+- Memperkecil pengaruh jika ada perubahan dari struktur table database.
 
-#### Static Sites
-Diagram pada slide berikutnya menunjukkan arsitektur server web dasar untuk situs statis (situs statis adalah situs yang mengembalikan konten hard-coded yang sama dari server setiap kali sumber daya tertentu diminta). Saat pengguna ingin menavigasi ke halaman, browser mengirimkan permintaan "GET" HTTP yang menentukan URL-nya.
+### Macam - Macam Key
+- Candidate Key
+Kumpulan satu atau lebih fields/columns yang dapat mengidentifikasi record secara unik dalam tabel. Setiap Candidate Key bisa digunakan sebagai Primary Key. Bisa jadi ada beberapa Candidate Keys di dalam satu tabel.
 
-#### Dynamic Site
-Situs web dinamis adalah situs di mana beberapa konten respons dihasilkan secara dinamis, hanya bila diperlukan. Di situs web dinamis, halaman HTML biasanya dibuat dengan memasukkan data dari database ke dalam placeholder di template HTML (ini adalah cara yang jauh lebih efisien untuk menyimpan konten dalam jumlah besar daripada menggunakan situs web statis).
+- Primary Key
+Kumpulan satu atau lebih fields/columns dari sebuah tabel yang secara unik mengidentifikasi sebuah record dalam tabel database. Valuenya tidak boleh berupa null ataupun duplicate value. Hanya boleh salah satu Candidate Key yang bisa menjadi Primary Key.
 
-### REST
-REST, atau Representational State Transfer, adalah gaya arsitektur untuk menyediakan standar antara sistem komputer di web, sehingga memudahkan sistem untuk berkomunikasi satu sama lain. Sistem yang sesuai dengan REST, sering disebut sistem RESTful, dicirikan oleh bagaimana mereka tidak memiliki kewarganegaraan dan memisahkan masalah klien dan server.
+- Alternate Key
+key yang bisa digunakan menjadi primary key. Pada dasarnya, Key ini merupakan candidate key yang tidak dijadikan  primary key.
 
-#### Komunikasi Antara Server dan Client
-- Membuat request
-- Gunakan method HTTP
-- Cantumkan Headers and Accept Parameters
+- Unique Key
+Kumpulan dari satu atau lebih fields/columns di sebuah table database yang secara unik mengidentifikasi sebuah record dalam table database tersebut. Hampir sama dengan Primary key, namun value dari Unique Key bisa berupa satu buah null value di dalam sebuah table database, dan Unique Key tidak bisa memiliki duplicate values
+
+- Foreign Key
+Field di sebuah table database yang menjadi Primary Key di table database lain. Value dari Foreign key bisa menerima multiple null dan duplicate values.
 
 
-## Intro & Essential Node JS
-### Node JS
-Node.js adalah lingkungan runtime JavaScript open-source, lintas platform, back-end yang berjalan pada mesin V8 dan mengeksekusi kode JavaScript di luar browser web. Node.js memungkinkan pengembang menggunakan JavaScript untuk menulis alat baris perintah dan untuk skrip sisi server—menjalankan skrip sisi server untuk menghasilkan konten halaman web dinamis sebelum halaman dikirim ke browser web pengguna.
+## Authentication & Authorization
+### Authentication
+Authentication digunakan untuk memverifikasi siapa Anda. Misalnya, katakanlah Anda pergi ke konser. Di pintu depan, penjaga keamanan meminta untuk melihat tiket dan ID Anda untuk memverifikasi bahwa nama di ID Anda cocok dengan nama di tiket Anda.
 
-### Arsitektur
-#### Single Thread
-Thread dalam ilmu komputer adalah eksekusi menjalankan beberapa tugas atau program secara bersamaan. Setiap unit yang mampu mengeksekusi kode disebut thread. Javascript menggunakan konsep single thread, yang berarti hanya memiliki satu tumpukan panggilan yang digunakan untuk menjalankan program.
+#### Faktor
+- Sesuatu yang Anda ketahui, seperti nama pengguna dan kata sandi.
+- Kepemilikan, seperti kartu keamanan atau perangkat seluler
+- Inheren adalah sesuatu tentang Anda, yang umumnya mengacu pada data biometrik seperti sidik jari.
 
-#### Even Loop
-Dengan menggunakan konsep arsitektur javascript, walaupun menggunakan single thread tetapi kita dapat melihat javascript seperti menggunakan multi thread. Terdapat event queue yang berguna sebagai penampung ketika terdapat perintah baru yang akan dieksekusi. Event loop akan memfasilitasi kondisi ini, event loop akan memeriksa terus menerus, ketika antrian kosong di call stack maka akan menambah antrian baru dari event queue sampai semua perintah selesai di eksekusi.
+### Authorization
+Authorization adalah verifikasi atas apa yang boleh Anda lakukan. Kembali ke contoh konser, setelah penjaga keamanan mengautentikasi Anda, Anda kemudian memberikan tiket Anda ke penjaga keamanan lain yang kemudian hanya mengizinkan Anda masuk ke Penerimaan Umum (bukan bagian VIP). Authorization sangat penting untuk keamanan web, dan bertanggung jawab atas segala hal mulai dari mencegah pengguna memodifikasi akun satu sama lain, melindungi aset back-end dari penyerang, hingga memberikan akses terbatas ke layanan eksternal.
 
-#### Server side scripting
-Sejatinya javascript merupakan bahasa pemrograman yang digunakan di front end side. Sehingga kita hanya bisa mengerjakan javascript dengan menggunakan browser untuk menampilkan hasil eksekusinya. Tetapi dengan menggunakan NodeJS kita dapat menjalankan javascript di server side menggunakan terminal command line menggunakan perintah “node”.
+### Token Based Authentication using JWT
+JSON Web Token, yang berarti token ini menggunakan JSON (Javascript Object Notation) berbentuk string panjang yang sangat random, lalu token ini memungkinkan kita untuk mengirimkan data yang dapat diverifikasi oleh dua pihak atau lebih.
 
-### Hal yang perlu dipahami sebelum belajar Node JS
-- Arrow Expression
-Arrow expression merupakan fitur terbaru dari javascript, yaitu mempermudah membuat sintaks function menggunakan “=>”
-```sh
-const greeting = () => {
-    return "Hello";
-}
-```
+#### Cara Kerja
+Ketika users berhasil melakukan Login maka server akan memberikan sebuah Token. Nanti Token tersebut akan disimpan oleh users pada Local Storage atau Cookies Browser dan bila users ingin mengakses halaman halaman tertentu maka harus menyertakan token tersebut. Untuk itu users akan mengirim balik token yang dikasih diawal tadi sebagai bukti bila user ini, sudah melakukan login. Sekarang kita akan lihat struktur dasarnya Tokennya dimana terdiri dari tiga bagian yaitu yang pertama header lalu kedua bagian payloadnya atau datanya dan yang ketiga adalah bagian verify signature.
 
-- Asynchronous
-Asynchronous merupakan konsep yang paling penting dari javascript. Pada dasarnya, javascript mengeksekusi code secara single thread dan berurutan baris per baris yang disebut dengan synchronous. Sedangkan asynchronous memungkinkan mengeksekusi code tanpa berurutan dengan cara “skip” code dan melanjutkan eksekusi code selanjutnya. Konsep ini menungkinkan code kita tidak terjadi blocking dan lebih efisien.
-
-- JSON
-JSON atau Javascript Object Notation merupakan format yang digunakan untuk menyimpan dan mengirim data menggunakan konsep object di javascript. JSON dapat digunakan di hampir semua bahasa pemrograman sehingga sangat cocok untuk dipelajari
+#### Komponen
+- Header
+Header biasanya terdiri dari dua bagian: jenis token, yaitu JWT, dan algoritma penandatanganan yang digunakan, seperti HMAC SHA256 atau RSA.
 ```sh
 {
-    data: [
-        {"title": "Learn Node JS", "published_at": "2022-01-01"},
-        {"title": "How to Become Fullstack Javascrip Developer", "published_at": "2022-03-20"},
-        {"title": "Mastering Backend for College Students", "published_at": "2022-10-10"}
-    ]
+  "alg": "HS256",
+  "typ": "JWT"
 }
 ```
 
-## Express JS
+- Payload
+Infomasi atau data yang ingin kita kirimkan. Dalam penerapannya di otentikasi atau pun otorisasi, biasanya data ini berupa data yang sifatnya unik bagi user, seperti: email, id.
+```sh
+{
+  "id": "4",
+  "name": "Zaki",
+  "address": "Klaten"
+}
+```
+
+- Signature
+Signature adalah hasil dari Hash atau gabungan dari isi encode Header dan Payloadnya lalu ditambahkan kode secretnya. Signature ini berguna untuk memverifikasi bahwa header maupun payload yang ada dalam token. Signature-nya sendiri tidak mungkin dapat diakali, karena sudah dalam berbentuk hash satu arah.
+
+Dan hasil ketiga bagian tersebut akan digabung dan otomatis di encode menjadi Token string random panjang seperti berikut:
+```sh
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+```
+
+## Sequelize
 ### Pengertian
-Express.js, atau hanya Express, adalah kerangka aplikasi web back end untuk Node.js, dirilis sebagai perangkat lunak sumber terbuka dan gratis di bawah Lisensi MIT. Ini dirancang untuk membangun aplikasi web dan API. Ini telah disebut sebagai kerangka kerja server standar de facto untuk Node.js.
+Sequelize adalah ORM (Object Relational Mapping) Node JS yang berbasis promise. Sequelize mendukung sebagian besar relational Database seperti MySQL, PostgresQL, MariaDB, SQLite dan Miscrosoft SQL Server. Dengan fitur fitur di Sequelize, kita bisa mengelola dan mengatur data di database kita dengan cepat, dan efisien.
 
-### Kelebihan
-Kelebihan dari framework ini terletak pada fitur caching, support dengan Google V8 Engine, JavaScript, serta didukung oleh komunitas dan skalabilitas aplikasi yang baik.
+### ORM
+ORM adalah suatu metode/teknik pemrograman yang digunakan untuk mengkonversi data dari lingkungan bahasa pemrograman berorientasi objek (OOP) dengan lingkungan database relational.
 
-### Back End Web Application
-Back end app adalah aplikasi yang berjalan di server-side yang bekerja untuk memberikan informasi berupa data sesuai request dari client / browser / front end app. Umumnya server-side app membuat REST API.
+### Penggunaan
+1. Install sequelize cli
+```sh
+npm i -g sequelize-cli
+```
+
+2. Install sequelize dan driver mysql
+```sh
+npm i sequelize
+npm i mysql2
+```
+
+3. Inisialisasi sequelize
+```sh
+npx sequelize-cli init
+```
+
+4. Masuk ke config/config.js, setting database
+```sh
+    "username": DB_USER,
+    "password": DB_PASS,
+    "database": DB_NAME,
+    "host": DB_HOST,
+    "dialect": "mysql"
+```
+
+5. Membuat model
+```sh
+npx sequelize-cli model:generate --name User --attributes name:string,address:text,age:integer
+```
+
+6. Migrate ke database
+```sh
+npx sequelize-cli db:migrate
+```
 
 
-## Design Database With MySQL
-### Pengertian
-MySQL adalah sebuah database management system (manajemen basis data) menggunakan perintah dasar SQL (Structured Query Language) yang cukup terkenal. Database management system (DBMS) MySQL multi pengguna dan multi alur ini sudah dipakai lebih dari 6 juta pengguna di seluruh dunia.
 
-### Kelebihan
-1. Mendukung Integrasi Dengan Bahasa Pemrograman Lain.
-2. Tidak Membutuhkan RAM Besar.
-3. Mendukung Multi User.
-4. Bersifat Open Source
-5. Tipe Data yang Bervariasi.
 
-### Kekurangan
-1. Kurang Cocok untuk Aplikasi Game dan Mobile
-2. Sulit Mengelola Database yang Besar
-3. Technical Support yang Kurang Bagus
-
-### Langkah-langkah Mendesain Database
-#### Menentukan Entity
-Entity merupakan table-table yang akan dibuat pada database, contohnya: Users, Posts, Courses.
-
-#### Menentukan Attributes
-Attributes adalah kolom yang ada di dalam entity, attributes memiliki nama dan tipe data seperti integer, varchar, date, boolean.
-
-#### Menentukan Relasi
-Ada banyak kasus setiap entity dapat saling berhubungan, misalnya user memiliki posts. Untuk membuat relasi kita dapat memanfaatkan primary key dan foreign key.
